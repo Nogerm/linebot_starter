@@ -82,7 +82,7 @@ function handleEvent(event) {
           .then(response => {
             if (response.isFound) {
               console.log("keyword found")
-              messageFactory.replyMsgs([response.resMsg], event.replyToken, "");
+              message.replyMsgs([response.resMsg], event.replyToken, "");
               return true;
             } else {
               console.log("keyword not found")
