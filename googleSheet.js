@@ -25,7 +25,7 @@ exports.getKeywordResponse = function (keyword) {
 
     const index = rows.findIndex(row => row.keyword == keyword);
     const isFound = index == -1 ? false : true;
-    const resMsg = {}
+    let resMsg = {}
     if (rows[index].resType === "文字") {
       resMsg = {
         isText: true,
