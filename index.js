@@ -36,6 +36,9 @@ app.listen(port, () => {
   console.log(`listening on ${port}`);
 });
 
+// init google sheet
+googleSheet.init();
+
 //---------------
 // event handler
 //---------------

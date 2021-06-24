@@ -2,11 +2,13 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
 const keywordTabName = "keyword";
 
-// Initialize Auth - see more available options at https://theoephraim.github.io/node-google-spreadsheet/#/getting-started/authentication
-doc.useServiceAccountAuth({
-  client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-  private_key: process.env.GOOGLE_PRIVATE_KEY,
-});
+exports.init = async function () {
+  // Initialize Auth - see more available options at https://theoephraim.github.io/node-google-spreadsheet/#/getting-started/authentication
+  await doc.useServiceAccountAuth({
+    client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    private_key: process.env.GOOGLE_PRIVATE_KEY,
+  });
+}
 
 //-------------
 // Functions
