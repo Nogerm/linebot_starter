@@ -1,0 +1,15 @@
+{
+  "name": "linebot-starter",
+  "version": "1.0.0",
+  "description": "A sample Node.js linebot app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "@line/bot-sdk": "^7.3.0",
+    "axios": "^0.21.1",
+    "express": "^4.16.3",
+    "googleapis": "^39.2.0"
+  }
+}
