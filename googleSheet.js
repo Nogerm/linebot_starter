@@ -1,26 +1,23 @@
-const {google} = require('googleapis');
-const sheetId = process.env.GOOGLE_SHEET_ID
+const { GoogleSpreadsheet } = require('google-spreadsheet');
+const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
 const keywordTabName = "keyword";
+
+// Initialize Auth - see more available options at https://theoephraim.github.io/node-google-spreadsheet/#/getting-started/authentication
+await doc.useServiceAccountAuth({
+  client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+  private_key: process.env.GOOGLE_PRIVATE_KEY,
+});
 
 //-------------
 // Functions
 //-------------
 exports.getKeyword = function () {
   return new Promise(async function (resolve, reject) {
-    const sheets = google.sheets({version: 'v4', auth});
-    sheets.spreadsheets.values.get({
-      spreadsheetId: sheetId,
-      range: `${keywordTabName}!A2:D3`,
-    }, (err, res) => {
-      if (err) return console.log('The API returned an error: ' + err);
-      const rows = res.data.values;
-      if (rows.length) {
-        rows.map((row) => {
-          console.log(`${row[0]}, ${row[1]}`);
-        });
-      } else {
-        console.log('No data found.');
-      }
-    });
+    await doc.loadInfo(); // loads document properties and worksheets
+    console.log(doc.title);
+
+    // read rows
+    const rows = await sheet.getRows(); // can pass in { limit, offset }
+    console.log(rows);
   });
 }
