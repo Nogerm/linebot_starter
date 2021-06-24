@@ -1,7 +1,7 @@
 {
     "name": "Linebot Starter",
     "description": "A Linebot starter with google sheet as DB deploy to heroku",
-    "repository": "https://github.com/heroku/node-js-getting-started",
-    "logo": "https://node-js-sample.herokuapp.com/node.png",
+    "repository": "https://github.com/Nogerm/linebot_starter",
+    "logo": "https://linebot-starter.herokuapp.com/logo.png",
     "keywords": ["node", "express", "static"]
   }
