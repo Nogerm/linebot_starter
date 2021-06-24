@@ -19,6 +19,7 @@ exports.getKeyword = function () {
     console.log(doc.title);
 
     // read rows
+    const sheet = doc.sheetsByTitle[keywordTabName];
     const rows = await sheet.getRows(); // can pass in { limit, offset }
     console.log(rows);
   });
