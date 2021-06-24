@@ -13,7 +13,7 @@ exports.init = async function () {
 //-------------
 // Functions
 //-------------
-exports.getKeyword = function () {
+exports.getKeywordResponse = function (keyword) {
   return new Promise(async function (resolve, reject) {
     await doc.loadInfo(); // loads document properties and worksheets
     console.log(doc.title);
@@ -22,5 +22,28 @@ exports.getKeyword = function () {
     const sheet = doc.sheetsByTitle[keywordTabName];
     const rows = await sheet.getRows(); // can pass in { limit, offset }
     console.log(rows);
+
+    const index = rows.findIndex(row => row.keyword == keyword);
+    const isFound = index == -1 ? false : true;
+    const resMsg = {}
+    if (rows[index].resType === "文字") {
+      resMsg = {
+        isText: true,
+        text: rows[index].resContent
+      }
+    } else if (rows[index].resType === "貼圖") {
+      const stkr = rows[index].resContent.split(',')
+      resMsg = {
+        isText: false,
+        pkgId: stkr[0],
+        stkrId: stkr[1]
+      }
+    }
+    const result = {
+      "isFound": isFound,
+      "resMsg": resMsg
+    }
+
+    resolve(result);
   });
 }

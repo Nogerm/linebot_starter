@@ -78,33 +78,18 @@ function handleEvent(event) {
       switch (event.message.type) {
         case 'text':
           //auto reply
-          googleSheet.getKeyword()
-          .then((response) => {
-            console.log(response);
-
-            if (result.data.found) {
+          googleSheet.getKeywordResponse(event.message.text)
+          .then(response => {
+            if (response.isFound) {
               console.log("keyword found")
-
-              let msgToSend = {}
-              if (result.data.type === "文字") {
-                msgToSend = {
-                  isText: true,
-                  text: result.data.msg
-                }
-              } else if (result.data.type === "貼圖") {
-                const stkr = result.data.msg.split(',')
-                msgToSend = {
-                  isText: false,
-                  pkgId: stkr[0],
-                  stkrId: stkr[1]
-                }
-              }
-
-              messageFactory.replyMsgs([msgToSend], event.replyToken, "");
+              messageFactory.replyMsgs([response.resMsg], event.replyToken, "");
               return true;
             } else {
               console.log("keyword not found")
             }
+          })
+          .catch(error => {
+            console.log("getKeywordResponse error")
           })
       }
       break;
