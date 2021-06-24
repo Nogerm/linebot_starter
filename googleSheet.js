@@ -25,25 +25,32 @@ exports.getKeywordResponse = function (keyword) {
 
     const index = rows.findIndex(row => (row.keyword == keyword && row.enable == "V"));
     const isFound = index == -1 ? false : true;
-    let resMsg = {}
-    if (rows[index].resType === "文字") {
-      resMsg = {
-        isText: true,
-        text: rows[index].resContent
+    if(isFound) {
+      let resMsg = {}
+      if (rows[index].resType === "文字") {
+        resMsg = {
+          isText: true,
+          text: rows[index].resContent
+        }
+      } else if (rows[index].resType === "貼圖") {
+        const stkr = rows[index].resContent.split(',')
+        resMsg = {
+          isText: false,
+          pkgId: stkr[0],
+          stkrId: stkr[1]
+        }
       }
-    } else if (rows[index].resType === "貼圖") {
-      const stkr = rows[index].resContent.split(',')
-      resMsg = {
-        isText: false,
-        pkgId: stkr[0],
-        stkrId: stkr[1]
+      const result = {
+        "isFound": isFound,
+        "resMsg": resMsg
       }
+      resolve(result);
+    } else {
+      const result = {
+        "isFound": isFound,
+        "resMsg": {}
+      }
+      resolve(result);
     }
-    const result = {
-      "isFound": isFound,
-      "resMsg": resMsg
-    }
-
-    resolve(result);
   });
 }
