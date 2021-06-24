@@ -23,7 +23,7 @@ exports.getKeywordResponse = function (keyword) {
     const rows = await sheet.getRows(); // can pass in { limit, offset }
     console.log(rows);
 
-    const index = rows.findIndex(row => row.keyword == keyword);
+    const index = rows.findIndex(row => (row.keyword == keyword && row.enable == "V"));
     const isFound = index == -1 ? false : true;
     let resMsg = {}
     if (rows[index].resType === "文字") {
